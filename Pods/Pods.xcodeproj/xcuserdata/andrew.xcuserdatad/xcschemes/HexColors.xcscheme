@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A5FB83A4935EBB5D8EE79648"
-               BuildableName = "libAFNetworking.a"
-               BlueprintName = "AFNetworking"
+               BlueprintIdentifier = "D8C5C8474277929B21957CF1"
+               BuildableName = "libHexColors.a"
+               BlueprintName = "HexColors"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

@@ -10,7 +10,7 @@
 #import "ALStyleKit.h"
 #import "ALServerManager.h"
 #import "ALSpellResult.h"
-
+#import "TSMessage.h"
 
 @interface ALTextVC ()
 
@@ -69,6 +69,16 @@
   [self.buttonOption setTitle:@"" forState:UIControlStateNormal];
   
   self.textView.text = @"";
+  
+  [[ALServerManager sharedManager]
+   checkInternetConnectionWithHandler:^(BOOL check) {
+     dispatch_async(dispatch_get_main_queue(), ^{
+       if (!check) {
+         [self messageErrorInternetConnection:YES];
+       }
+     });
+   }];
+  
 }
 
 
@@ -85,6 +95,20 @@
   return im;
 }
 
+#pragma mark - TSMessages
+
+- (void)messageErrorInternetConnection:(BOOL)animated {
+  [TSMessage showNotificationWithTitle:@"Что-то не так"
+                              subtitle:@"Пропало соединение с интернет. Проверьте!"
+                                  type:TSMessageNotificationTypeError];
+}
+
+
+- (void)messageSuccess:(BOOL)animated {
+  [TSMessage showNotificationWithTitle:@"Исправление завершено"
+                              subtitle:@"Исправленные слова подсвечены цветом #FFCC00"
+                                  type:TSMessageNotificationTypeSuccess];
+}
 
 #pragma mark - getResponse
 
@@ -134,7 +158,7 @@
 
 - (IBAction)correctButton:(id)sender {
   if ([self isOK]) {
-    NSLog(@"returned");
+    //NSLog(@"returned");
     return;
   }
   
@@ -167,6 +191,7 @@
   
   }
   self.ok = YES;
+  [self messageSuccess:YES];
 }
 
 - (IBAction)nextWord {
@@ -231,6 +256,9 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+  [self clearAttributes];
+  self.buttonNext.enabled = NO;
+  self.buttonPrev.enabled = NO;
   UITextPosition *beginning = [textView beginningOfDocument];
   [textView setSelectedTextRange:[textView textRangeFromPosition:beginning
                                                         toPosition:beginning]];
@@ -242,6 +270,8 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
+  self.buttonNext.enabled = YES;
+  self.buttonPrev.enabled = YES;
   UIColor *color = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
   self.contentView.layer.borderColor = color.CGColor;
   self.contentView.layer.borderWidth = 1.0f;
@@ -305,6 +335,9 @@
   
   
 }
+
+
+
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

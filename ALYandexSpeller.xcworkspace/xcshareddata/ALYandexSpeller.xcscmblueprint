@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "230C30C72C6F3BE8F23256B3133CD3E8E96AC62C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "230C30C72C6F3BE8F23256B3133CD3E8E96AC62C" : 0,
+    "7953573C9A7B665E2CC90CF946FFB407E05E486B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "81318C96-3F70-4A3F-94F2-15F9336A5D41",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "230C30C72C6F3BE8F23256B3133CD3E8E96AC62C" : "ALYandexSpeller\/",
+    "7953573C9A7B665E2CC90CF946FFB407E05E486B" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ALYandexSpeller",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ALYandexSpeller.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:andryuwka\/ALYandexSpeller.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "230C30C72C6F3BE8F23256B3133CD3E8E96AC62C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:andryuwka\/ALYandexTranslator.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7953573C9A7B665E2CC90CF946FFB407E05E486B"
+    }
+  ]
+}
