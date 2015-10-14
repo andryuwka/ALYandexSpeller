@@ -248,7 +248,8 @@
   [self clearAttributes];
   ALSpellResult *result = self.substitutions[self.current];
   NSRange selectedRange = NSMakeRange(result.position, result.length);
-  if ([result.strings count] != 0) {
+  [self.textView scrollRangeToVisible:selectedRange];
+  //if ([result.strings count] != 0) {
     UIColor *color;
     if (result.correct == NO) {
       color = [UIColor redColor];
@@ -263,8 +264,9 @@
                              value:color
                              range:selectedRange];
     self.textView.attributedText = attributedString;
-  }
+  //}
   self.currentRange = selectedRange;
+  
 }
 
 - (IBAction)previousWord {
@@ -278,7 +280,8 @@
   [self clearAttributes];
   ALSpellResult *result = self.substitutions[self.current];
   NSRange selectedRange = NSMakeRange(result.position, result.length);
-  if ([result.strings count] != 0) {
+  [self.textView scrollRangeToVisible:selectedRange];
+  //if ([result.strings count] != 0) {
     UIColor *color;
     if (result.correct == NO) {
       color = [UIColor redColor];
@@ -292,9 +295,10 @@
                              value:color
                              range:selectedRange];
     self.textView.attributedText = attributedString;
-  }
+  //}
 
   self.currentRange = selectedRange;
+  [self.textView scrollRangeToVisible:selectedRange];
 }
 
 #pragma mark - textView Methods
