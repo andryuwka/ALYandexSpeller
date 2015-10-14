@@ -16,10 +16,10 @@
                length:(NSInteger)length
              position:(NSInteger)position
                   row:(NSInteger)row
-                 word:(NSString*)word {
-  
+                 word:(NSString *)word {
+
   ALSpellResult *temp = [super init];
-  
+
   temp.strings = strings;
   temp.code = code;
   temp.column = column;
@@ -28,12 +28,12 @@
   temp.row = row;
   temp.word = word;
   temp.correct = NO;
-  
+
   return temp;
 }
 
 - (void)description {
-  
+
   NSLog(@"code = %ld;", self.code);
   NSLog(@"column = %ld;", self.column);
   NSLog(@"length = %ld;", self.length);
@@ -41,9 +41,6 @@
   NSLog(@"row = %ld;", self.row);
   NSLog(@"word = %@;", self.word);
   NSLog(@"substitutions = %@", self.strings);
-
 }
-
-
 
 @end

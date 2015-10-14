@@ -24,8 +24,6 @@
 @property(weak, nonatomic) IBOutlet UIButton *buttonPaste;
 @property(weak, nonatomic) IBOutlet UIButton *buttonCopy;
 
-
-
 @property(nonatomic) NSInteger current;
 @property(nonatomic) NSRange currentRange;
 @property(nonatomic) NSInteger correctedCount;

@@ -109,9 +109,8 @@
 - (void)messageErrorInternetConnection:(BOOL)animated {
   [TSMessage
       showNotificationWithTitle:@"Что-то не так"
-                       subtitle:
-                           @"Пропало соединение с интернет. "
-                           @"Проверьте!"
+                       subtitle:@"Пропало соединение с "
+                                @"интернет. " @"Проверьте!"
                            type:TSMessageNotificationTypeError];
 }
 
@@ -119,17 +118,16 @@
   [TSMessage
       showNotificationWithTitle:@"Исправление завершено"
                        subtitle:
-                           @"Исправленные слова подсвечены цветом "
-                           @"#FFCC00"
+                           @"Исправленные слова подсвечены "
+                           @"цветом " @"#FFCC00"
                            type:TSMessageNotificationTypeSuccess];
 }
 
 - (void)messageCoppied:(BOOL)animated {
   [TSMessage
       showNotificationWithTitle:@"Скопировано"
-                       subtitle:
-                           @"Текст скопирован в буфер"
-   
+                       subtitle:@"Текст скопирован в буфер"
+
                            type:TSMessageNotificationTypeSuccess];
 }
 
@@ -144,6 +142,11 @@
         self.substitutions = [NSMutableArray arrayWithArray:result];
       }
       onFailure:^(NSError *error, NSInteger code) {
+        
+        if (error.code == -1009) {
+          [self messageErrorInternetConnection:YES];
+        }
+        
         NSLog(@"Error at - (void)checkText: in "
               @"ALTextVC: error = %@, code = %ld",
               [error localizedDescription], (long)code);
@@ -182,58 +185,65 @@
 }
 
 - (IBAction)optionsButton:(id)sender {
-  /*
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [self performSegueWithIdentifier:@"IdentifierOptionsTVC" sender:self];
-  });
-  */
+
 }
 
 - (IBAction)correctButton:(id)sender {
-  if ([self isOK]) {
-    // NSLog(@"returned");
-    return;
-  }
-
-  for (NSInteger i = 0; i < [self.substitutions count]; ++i) {
-    ALSpellResult *currentResult = self.substitutions[i];
-    NSRange selectedRange =
-        NSMakeRange(currentResult.position, currentResult.length);
-    UITextPosition *begin = self.textView.beginningOfDocument;
-    UITextPosition *start =
-        [self.textView positionFromPosition:begin
-                                     offset:selectedRange.location];
-    UITextPosition *end =
-        [self.textView positionFromPosition:start offset:selectedRange.length];
-    UITextRange *sameRange =
-        [self.textView textRangeFromPosition:start toPosition:end];
-    if ([currentResult.strings count] != 0) {
-      NSString *word = currentResult.strings[0];
-      NSInteger difference = word.length - selectedRange.length;
-      if (difference != 0) {
-        for (NSInteger j = i + 1; j < [self.substitutions count]; ++j) {
-          ALSpellResult *sub = self.substitutions[j];
-          sub.position += difference;
-        }
-      }
-
-      [self.textView replaceRange:sameRange withText:currentResult.strings[0]];
-
-      currentResult.length = word.length;
-      NSUInteger oldLocation = selectedRange.location;
-      selectedRange = NSMakeRange(oldLocation, word.length);
-
-      NSMutableAttributedString *attributedString =
-          [[NSMutableAttributedString alloc]
+  
+  [[ALServerManager sharedManager]
+   checkInternetConnectionWithHandler:^(BOOL check) {
+     dispatch_async(dispatch_get_main_queue(), ^{
+       if (!check) {
+         [self messageErrorInternetConnection:YES];
+       } else {
+         if ([self isOK]) {
+           // NSLog(@"returned");
+           return;
+         }
+         
+         for (NSInteger i = 0; i < [self.substitutions count]; ++i) {
+           ALSpellResult *currentResult = self.substitutions[i];
+           NSRange selectedRange =
+           NSMakeRange(currentResult.position, currentResult.length);
+           UITextPosition *begin = self.textView.beginningOfDocument;
+           UITextPosition *start =
+           [self.textView positionFromPosition:begin
+                                        offset:selectedRange.location];
+           UITextPosition *end =
+           [self.textView positionFromPosition:start offset:selectedRange.length];
+           UITextRange *sameRange =
+           [self.textView textRangeFromPosition:start toPosition:end];
+           if ([currentResult.strings count] != 0) {
+             NSString *word = currentResult.strings[0];
+             NSInteger difference = word.length - selectedRange.length;
+             if (difference != 0) {
+               for (NSInteger j = i + 1; j < [self.substitutions count]; ++j) {
+                 ALSpellResult *sub = self.substitutions[j];
+                 sub.position += difference;
+               }
+             }
+             
+             [self.textView replaceRange:sameRange withText:currentResult.strings[0]];
+             
+             currentResult.length = word.length;
+             NSUInteger oldLocation = selectedRange.location;
+             selectedRange = NSMakeRange(oldLocation, word.length);
+             
+             NSMutableAttributedString *attributedString =
+             [[NSMutableAttributedString alloc]
               initWithAttributedString:self.textView.attributedText];
-      [attributedString addAttribute:NSForegroundColorAttributeName
-                               value:[ALStyleKit yandexColor]
-                               range:selectedRange];
-      self.textView.attributedText = attributedString;
-    }
-  }
-  self.ok = YES;
-  [self messageSuccess:YES];
+             [attributedString addAttribute:NSForegroundColorAttributeName
+                                      value:[ALStyleKit yandexColor]
+                                      range:selectedRange];
+             self.textView.attributedText = attributedString;
+           }
+         }
+         self.ok = YES;
+         [self messageSuccess:YES];
+       }
+     });
+   }];
+  
 }
 
 - (IBAction)nextWord {
@@ -249,24 +259,23 @@
   ALSpellResult *result = self.substitutions[self.current];
   NSRange selectedRange = NSMakeRange(result.position, result.length);
   [self.textView scrollRangeToVisible:selectedRange];
-  //if ([result.strings count] != 0) {
-    UIColor *color;
-    if (result.correct == NO) {
-      color = [UIColor redColor];
-    } else {
-      color = [ALStyleKit yandexColor];
-    }
+  // if ([result.strings count] != 0) {
+  UIColor *color;
+  if (result.correct == NO) {
+    color = [UIColor redColor];
+  } else {
+    color = [ALStyleKit yandexColor];
+  }
 
-    NSMutableAttributedString *attributedString =
-        [[NSMutableAttributedString alloc]
-            initWithAttributedString:self.textView.attributedText];
-    [attributedString addAttribute:NSForegroundColorAttributeName
-                             value:color
-                             range:selectedRange];
-    self.textView.attributedText = attributedString;
+  NSMutableAttributedString *attributedString =
+      [[NSMutableAttributedString alloc]
+          initWithAttributedString:self.textView.attributedText];
+  [attributedString addAttribute:NSForegroundColorAttributeName
+                           value:color
+                           range:selectedRange];
+  self.textView.attributedText = attributedString;
   //}
   self.currentRange = selectedRange;
-  
 }
 
 - (IBAction)previousWord {
@@ -281,20 +290,20 @@
   ALSpellResult *result = self.substitutions[self.current];
   NSRange selectedRange = NSMakeRange(result.position, result.length);
   [self.textView scrollRangeToVisible:selectedRange];
-  //if ([result.strings count] != 0) {
-    UIColor *color;
-    if (result.correct == NO) {
-      color = [UIColor redColor];
-    } else {
-      color = [ALStyleKit yandexColor];
-    }
-    NSMutableAttributedString *attributedString =
-        [[NSMutableAttributedString alloc]
-            initWithAttributedString:self.textView.attributedText];
-    [attributedString addAttribute:NSForegroundColorAttributeName
-                             value:color
-                             range:selectedRange];
-    self.textView.attributedText = attributedString;
+  // if ([result.strings count] != 0) {
+  UIColor *color;
+  if (result.correct == NO) {
+    color = [UIColor redColor];
+  } else {
+    color = [ALStyleKit yandexColor];
+  }
+  NSMutableAttributedString *attributedString =
+      [[NSMutableAttributedString alloc]
+          initWithAttributedString:self.textView.attributedText];
+  [attributedString addAttribute:NSForegroundColorAttributeName
+                           value:color
+                           range:selectedRange];
+  self.textView.attributedText = attributedString;
   //}
 
   self.currentRange = selectedRange;
@@ -319,7 +328,7 @@
   self.buttonNext.enabled = NO;
   self.buttonPrev.enabled = NO;
   self.tableView.hidden = YES;
-  
+
   UITextPosition *beginning = [textView beginningOfDocument];
   [textView setSelectedTextRange:[textView textRangeFromPosition:beginning
                                                       toPosition:beginning]];
@@ -332,7 +341,7 @@
 - (void)textViewDidEndEditing:(UITextView *)textView {
   self.buttonNext.enabled = YES;
   self.buttonPrev.enabled = YES;
-    
+
   self.tableView.hidden = NO;
   UIColor *color = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
   self.contentView.layer.borderColor = color.CGColor;
