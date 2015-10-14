@@ -13,6 +13,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3aF-R9-rpj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="46R-Qp-KPx" kind="relationship" relationship="rootViewController" id="ebi-SS-ybN"/>
@@ -35,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7X-IL-HRS">
-                                <rect key="frame" x="440" y="564" width="140" height="28"/>
+                                <rect key="frame" x="440" y="562" width="140" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -47,7 +48,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTh-Qv-6oJ">
-                                <rect key="frame" x="20" y="564" width="88" height="28"/>
+                                <rect key="frame" x="20" y="562" width="88" height="30"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <state key="normal" title="Очистить">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,7 +97,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uRy-BP-qWT">
-                                <rect key="frame" x="8" y="230" width="542" height="326"/>
+                                <rect key="frame" x="8" y="268" width="542" height="286"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Cell" id="79Q-Vd-oog">
@@ -109,9 +110,30 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JwN-Gg-S0t">
+                                <rect key="frame" x="24" y="230" width="200" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Вставить">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pasteButton:" destination="46R-Qp-KPx" eventType="touchUpInside" id="ug6-va-jDp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XtM-Wx-KqT">
+                                <rect key="frame" x="376" y="230" width="200" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Скопировать">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="copyButton:" destination="46R-Qp-KPx" eventType="touchUpInside" id="P0O-Vl-w5N"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="XtM-Wx-KqT" firstAttribute="top" secondItem="eg0-Nl-Mgz" secondAttribute="bottom" constant="8" id="08L-OB-CB4"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="leading" secondItem="eg0-Nl-Mgz" secondAttribute="leading" id="0vJ-Mu-kiL"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="trailing" secondItem="til-zk-akd" secondAttribute="trailing" id="3Lx-je-fI0"/>
                             <constraint firstItem="XTh-Qv-6oJ" firstAttribute="top" secondItem="uRy-BP-qWT" secondAttribute="bottom" constant="8" symbolic="YES" id="3gq-fE-Z4L"/>
@@ -119,17 +141,25 @@
                             <constraint firstAttribute="trailing" secondItem="eg0-Nl-Mgz" secondAttribute="trailing" constant="8" id="AUn-x8-OHa"/>
                             <constraint firstItem="I7X-IL-HRS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XTh-Qv-6oJ" secondAttribute="trailing" constant="8" symbolic="YES" id="M7j-1v-odt"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="trailing" secondItem="eg0-Nl-Mgz" secondAttribute="trailing" id="MfA-Rj-pF1"/>
+                            <constraint firstItem="XtM-Wx-KqT" firstAttribute="height" secondItem="JwN-Gg-S0t" secondAttribute="height" id="NFt-B1-gww"/>
+                            <constraint firstItem="JwN-Gg-S0t" firstAttribute="height" secondItem="XTh-Qv-6oJ" secondAttribute="height" id="QUD-wT-Igs"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="leading" secondItem="N3y-qM-jqv" secondAttribute="leadingMargin" id="SyE-Zn-2id"/>
+                            <constraint firstItem="JwN-Gg-S0t" firstAttribute="leading" secondItem="N3y-qM-jqv" secondAttribute="leadingMargin" constant="4" id="WKJ-fw-cOj"/>
                             <constraint firstItem="eg0-Nl-Mgz" firstAttribute="height" secondItem="N3y-qM-jqv" secondAttribute="height" multiplier="1/4" id="WP6-UB-xf3"/>
+                            <constraint firstItem="JwN-Gg-S0t" firstAttribute="top" secondItem="eg0-Nl-Mgz" secondAttribute="bottom" constant="8" id="Xwq-9J-xuJ"/>
                             <constraint firstItem="XTh-Qv-6oJ" firstAttribute="top" secondItem="uRy-BP-qWT" secondAttribute="bottom" constant="183" id="a8a-yN-CDo"/>
+                            <constraint firstItem="XtM-Wx-KqT" firstAttribute="leading" relation="lessThanOrEqual" secondItem="JwN-Gg-S0t" secondAttribute="trailing" constant="342" id="aAu-5S-pQU"/>
                             <constraint firstItem="dGJ-mX-ONK" firstAttribute="top" secondItem="XTh-Qv-6oJ" secondAttribute="bottom" constant="8" id="b8S-Ar-o7C"/>
                             <constraint firstAttribute="leadingMargin" secondItem="XTh-Qv-6oJ" secondAttribute="leading" id="dhH-0i-fhJ"/>
+                            <constraint firstItem="XtM-Wx-KqT" firstAttribute="width" secondItem="N3y-qM-jqv" secondAttribute="width" multiplier="1/3" id="gCb-c2-oet"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="width" secondItem="til-zk-akd" secondAttribute="width" id="hIh-1Z-luy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XtM-Wx-KqT" secondAttribute="trailing" constant="4" id="hr3-2i-Ica"/>
+                            <constraint firstItem="JwN-Gg-S0t" firstAttribute="width" secondItem="N3y-qM-jqv" secondAttribute="width" multiplier="1/3" id="iKB-cd-Gvx"/>
+                            <constraint firstItem="uRy-BP-qWT" firstAttribute="top" secondItem="JwN-Gg-S0t" secondAttribute="bottom" constant="8" id="ia4-TP-IUl"/>
                             <constraint firstItem="I7X-IL-HRS" firstAttribute="top" secondItem="uRy-BP-qWT" secondAttribute="bottom" constant="8" symbolic="YES" id="nnS-1f-QNO"/>
                             <constraint firstItem="uRy-BP-qWT" firstAttribute="top" secondItem="til-zk-akd" secondAttribute="bottom" constant="8" id="pHN-U2-sjW"/>
                             <constraint firstItem="eg0-Nl-Mgz" firstAttribute="top" secondItem="2Ne-zi-tVX" secondAttribute="bottom" constant="8" symbolic="YES" id="pz3-yG-WiM"/>
                             <constraint firstItem="dGJ-mX-ONK" firstAttribute="top" secondItem="I7X-IL-HRS" secondAttribute="bottom" constant="8" symbolic="YES" id="vZs-Ky-ySt"/>
-                            <constraint firstItem="uRy-BP-qWT" firstAttribute="top" secondItem="eg0-Nl-Mgz" secondAttribute="bottom" constant="8" symbolic="YES" id="zRN-f5-5FJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="I7X-IL-HRS" secondAttribute="trailing" id="zxw-fm-acX"/>
                         </constraints>
                         <variation key="default">
@@ -160,9 +190,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="buttonClear" destination="XTh-Qv-6oJ" id="N3U-Z4-zQ8"/>
+                        <outlet property="buttonCopy" destination="XtM-Wx-KqT" id="DWw-JO-gdH"/>
                         <outlet property="buttonCorrect" destination="I7X-IL-HRS" id="LEF-if-iVA"/>
                         <outlet property="buttonNext" destination="sor-k8-gLc" id="ZsX-Hs-APN"/>
                         <outlet property="buttonOption" destination="81A-ko-v7B" id="UON-3h-0tx"/>
+                        <outlet property="buttonPaste" destination="JwN-Gg-S0t" id="WCT-DK-E8F"/>
                         <outlet property="buttonPrev" destination="aAz-Y5-VZK" id="upA-E4-dYZ"/>
                         <outlet property="contentView" destination="eg0-Nl-Mgz" id="NkA-f6-69r"/>
                         <outlet property="tableView" destination="uRy-BP-qWT" id="4fo-qm-2Sr"/>
