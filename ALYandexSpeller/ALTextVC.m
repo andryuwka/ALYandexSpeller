@@ -259,6 +259,7 @@
   [self clearAttributes];
   self.buttonNext.enabled = NO;
   self.buttonPrev.enabled = NO;
+  self.tableView.hidden = YES;
   UITextPosition *beginning = [textView beginningOfDocument];
   [textView setSelectedTextRange:[textView textRangeFromPosition:beginning
                                                         toPosition:beginning]];
@@ -272,13 +273,16 @@
 - (void)textViewDidEndEditing:(UITextView *)textView {
   self.buttonNext.enabled = YES;
   self.buttonPrev.enabled = YES;
+  self.tableView.hidden = NO;
   UIColor *color = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
   self.contentView.layer.borderColor = color.CGColor;
   self.contentView.layer.borderWidth = 1.0f;
   self.current = -1;
   
-  [self check];
+  
   [self clearAttributes];
+  [self clearTable];
+  [self check];
 }
 
 #pragma mark - tableView Methods
